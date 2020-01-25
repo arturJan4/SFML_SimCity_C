@@ -23,6 +23,19 @@ void GameLoop::loadTextures()
     m_data->graphics.loadTexture("UIPlayButton", "assets/UI/PlayButton.png");
     m_data->graphics.loadTexture("UISmallEmptyButton", "assets/UI/SmallEmptyButton.png");
 
+    //TILES
+    m_data->graphics.loadTexture("commercial", "assets/Tile/commercial.png");
+    m_data->graphics.loadTexture("forest", "assets/Tile/forest.png");
+    m_data->graphics.loadTexture("grass", "assets/Tile/grass.png");
+    m_data->graphics.loadTexture("industrial", "assets/Tile/industrial.png");
+    m_data->graphics.loadTexture("residential", "assets/Tile/residential.png");
+    //m_data->graphics.loadTexture("water", "assets/Tile/water.png");
+    //m_data->graphics.loadTexture("empty", "assets/Tile/empty.png");
+    //m_data->graphics.loadTexture("mine", "assets/Tile/mine.png");
+    //m_data->graphics.loadTexture("roads", "assets/Tile/roads.png");
+
+
+
 
 }
 void GameLoop::run()

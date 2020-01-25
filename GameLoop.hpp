@@ -3,7 +3,9 @@
 
 #include "StateMachine.hpp"
 #include "MediaHandler.hpp"
+#include "Tile.hpp"
 #include <string>
+#include <map>
 #include <memory>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -27,9 +29,11 @@ class GameLoop
 
         sf::Clock m_clock;
         std::shared_ptr<GameData> m_data = std::make_shared<GameData>(); //copy pointer
+        std::map<std::string, Tile> m_TileMap;
 
         void run();
         void loadTextures();
+        void loadTiles();
 };
 
 #endif // GAMELOOP_HPP_INCLUDED

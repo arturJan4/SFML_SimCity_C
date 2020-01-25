@@ -21,6 +21,6 @@ class MainMenuState : public State
         sf::Clock m_clock;
         sf::View m_view;
         sf::Sprite m_background;
-        Button button;
+        //Button button;
 };
 #endif // MAINMENUSTATE_HPP_INCLUDED
