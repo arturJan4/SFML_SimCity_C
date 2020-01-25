@@ -1,10 +1,11 @@
 #include "GameLoop.hpp"
 #include "MainMenuState.hpp"
+#include <iostream>
 
 GameLoop::GameLoop(int width, int height, std::string title)
 {
     m_data->window.create(sf::VideoMode(width,height),
-                          title, sf::Style::Close | sf::Style::Titlebar);
+                          title, sf::Style::Default);
     this->loadTextures();
     m_data->machine.pushState(new MainMenuState(this->m_data));
     this->run();
@@ -13,6 +14,15 @@ GameLoop::GameLoop(int width, int height, std::string title)
 void GameLoop::loadTextures()
 {
     m_data->graphics.loadTexture("background", "assets/background.png");
+
+    //MENU
+    m_data->graphics.loadTexture("UIEmptyButtoon", "assets/UI/EmptyButton.png");
+    m_data->graphics.loadTexture("UIExitButtion", "assets/UI/ExitButton.png");
+    m_data->graphics.loadTexture("UILargeEmptyButton", "assets/UI/LargeEmptyButton.png");
+    m_data->graphics.loadTexture("UIMenuButton", "assets/UI/MenuButton.png");
+    m_data->graphics.loadTexture("UIPlayButton", "assets/UI/PlayButton.png");
+    m_data->graphics.loadTexture("UISmallEmptyButton", "assets/UI/SmallEmptyButton.png");
+
 
 }
 void GameLoop::run()
@@ -43,9 +53,9 @@ void GameLoop::run()
         while(sumTime >= dt)
         {
             this->m_data->machine.getTopState()->handleInput();
+            this->m_data->machine.getTopState()->draw(dt);
             this->m_data->machine.getTopState()->update(dt);
             //this->m_data->window.clear(sf::Color::Black);
-            //this->m_data->machine.getTopState()->draw(dt);
             //this->m_data->window.display();
             sumTime -= dt;
         }
@@ -53,12 +63,12 @@ void GameLoop::run()
         //draw in-between frame
         interpolation = sumTime / dt;
         this->m_data->machine.getTopState()->draw(interpolation);
-        this->m_data->window.display();
+        //this->m_data->window.display();
     }
 }
 
 GameLoop::~GameLoop()
 {
-   while(this->m_data->machine.getTopState() != nullptr)
-       this->m_data->machine.popState();//? Test this
+    while(this->m_data->machine.getTopState() != nullptr)
+        this->m_data->machine.popState();//? Test this
 }
