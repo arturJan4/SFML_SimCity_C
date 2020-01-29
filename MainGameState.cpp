@@ -54,5 +54,6 @@ void MainGameState::draw(float dt)
     m_data->window.setView(m_view);
     m_data->window.clear();
     m_data->window.draw(m_background);
+    m_world.draw(m_data->window,dt);
     m_data->window.display();
 }

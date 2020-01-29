@@ -9,7 +9,7 @@ class World
 {
     public:
     //World(const std::string& filepath, int width); // always square?
-    World():m_width(0){};
+    World();
     World(const std::string& filepath);//height width in first line
     ~World(){};
 

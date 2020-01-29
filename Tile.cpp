@@ -3,6 +3,7 @@
 Tile::Tile(sf::Texture& texture, TileType type)
 {
     m_assoSprite.setTexture(texture);
+    m_type = type;
 }
 
 Tile::~Tile()
