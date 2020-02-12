@@ -3,30 +3,45 @@
 #include <fstream>
 #include <iostream>
 
-World::World()
+World::World(const std::string& filepath, unsigned int width, unsigned int height,
+             std::map<std::string, Tile> &tileRefResources)
 {
-    m_width = 64;
-    m_height = 64;
-    sf::Texture temp;
-    if(!temp.loadFromFile("assets/Tile/commercial.png"))std::cerr << "error loading tile";
-    Tile testTile(temp,TileType::EMPTY);
-    for(int i = 0; i < 64*64; ++i)
+    load(filepath,tileRefResources);
+    //m_width = width;
+    //m_height = height;
+    //m_tileRefResources = tileRefResources;
+    //if(!temp.loadFromFile("assets/Tile/grass.png"))std::cerr << "error loading tile";
+    //tiles = new Tile[m_width*m_height];
+    /*
+    for(int i = 0; i < m_width * m_height; ++i)
     {
-        m_tileVector.push_back(testTile);
+        tiles[i].m_assoSprite.setTexture(temp);
+        tiles[i].m_assoSprite.setScale(m_scale,m_scale);
+        tiles[i].m_type = TileType::EMPTY;
+        m_tileVector.push_back(tiles[i]);
     }
-
+    */
 }
 
-World::World(const std::string& filepath)
+void World::load(const std::string& filepath, std::map<std::string, Tile> &tileRefResources)
 {
-    load(filepath);
-}
+    /*
+        //TYPE
+        0 - EMPTY
+        1 - FOREST
+        2 - COMMERCIAL
+        itd.
 
-void World::load(const std::string& filepath)
-{
+
+        Format:
+        width height // how many(not pixels)
+
+        //Tiles:
+
+    */
     std::ifstream inFile;
     inFile.open(filepath, std::ios::in);
-    if(!inFile)
+    if(!inFile.is_open())
     {
         std::cerr << "unable to open file <" << filepath << ">\n";
         exit(1);
@@ -35,6 +50,31 @@ void World::load(const std::string& filepath)
     inFile >> m_width;
     inFile >> m_height;
 
+    for(int i = 0; i < m_width * m_height; ++i)
+    {
+        int type;
+        inFile >> type;
+
+        switch(type)
+        {
+        case 0:
+            m_tileVector.push_back(tileRefResources.at("empty"));
+            //tile->m_type = TileType::EMPTY;
+            //tile->m_assoSprite;
+            break;
+        case 1:
+            m_tileVector.push_back(tileRefResources.at("forest"));
+            //std::cerr << "loading tile 1 - forest";
+            break;
+        case 2:
+            m_tileVector.push_back(tileRefResources.at("commercial"));
+            //std::cerr << "loading tile 1 - forest";
+            break;
+        default:
+            std::cerr << "inType error";
+            break;
+        }
+    }
     //read rest
     //std::cerr << m_width << " "<< m_height;
     inFile.close();
@@ -60,8 +100,12 @@ void World::draw(sf::RenderWindow& window, float dt)
     {
         for(int j = 0; j < m_width; ++j)
         {
-               // m_tileVector[i*m_width + j].m_assoSprite.setPosition(120,120);
-                m_tileVector[i*m_width + j].draw(window,dt);
+            sf::Vector2f position;
+            //!!Depens on size//TODO change
+            position.x = 16 * m_scale * j;
+            position.y = 16 * m_scale * i;
+            m_tileVector[i*m_width + j].m_assoSprite.setPosition(position);
+            m_tileVector[i*m_width + j].draw(window,dt);
         }
     }
 }

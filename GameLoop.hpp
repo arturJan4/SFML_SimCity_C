@@ -16,6 +16,7 @@ struct GameData
     MediaHandler graphics;
     StateMachine machine;
     sf::RenderWindow window;
+    std::map<std::string, Tile> m_TileMap;
 };
 
 class GameLoop
@@ -24,12 +25,13 @@ class GameLoop
     GameLoop(int width, int height, std::string title);
     ~GameLoop();
 
+    const static int tileSize = 16; //size of tile-textures in pixels
+
     private:
         const float dt = 1.0f / 60.0f;
 
         sf::Clock m_clock;
         std::shared_ptr<GameData> m_data = std::make_shared<GameData>(); //copy pointer
-        std::map<std::string, Tile> m_TileMap;
 
         void run();
         void loadTextures();

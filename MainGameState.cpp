@@ -3,17 +3,23 @@
 MainGameState::MainGameState(std::shared_ptr<GameData> gamedata)
 {
     m_data = gamedata;
-    m_world = World("mapData.txt");
+    m_world = new World("mapData.txt",64,64,gamedata->m_TileMap);
+    init();
 }
 
 void MainGameState::init()
 {
     sf::Vector2f position = sf::Vector2f(this->m_data->window.getSize());
     m_view.setSize(position);
+
+    m_background.setTexture(this->m_data->graphics.getTexture("background"));
+    m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_view));
+    m_background.setScale(
+                float(position.x) / float((m_background.getTexture()->getSize().x)),
+                float(position.y) / float((m_background.getTexture()->getSize().y)));
+
     position = 0.5f * position;
     m_view.setCenter(position);
-    m_background.setTexture(this->m_data->graphics.getTexture("background"));
-
 }
 
 void MainGameState::handleInput()
@@ -34,12 +40,12 @@ void MainGameState::handleInput()
         }
         if(sf::Event::Resized == event.type)
         {
-           m_view.setSize(event.size.width,event.size.height);
-           //
-           m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_view));
-           m_background.setScale(
-           float(event.size.width) / float((m_background.getTexture()->getSize().x)),
-           float(event.size.height)/ float((m_background.getTexture()->getSize().y)));
+            m_view.setSize(event.size.width,event.size.height);
+            //
+            m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_view));
+            m_background.setScale(
+                float(event.size.width) / float((m_background.getTexture()->getSize().x)),
+                float(event.size.height)/ float((m_background.getTexture()->getSize().y)));
         }
     }
 }
@@ -54,6 +60,6 @@ void MainGameState::draw(float dt)
     m_data->window.setView(m_view);
     m_data->window.clear();
     m_data->window.draw(m_background);
-    m_world.draw(m_data->window,dt);
+    m_world->draw(m_data->window,dt);
     m_data->window.display();
 }

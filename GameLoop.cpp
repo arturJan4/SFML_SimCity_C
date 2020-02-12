@@ -34,7 +34,8 @@ void GameLoop::loadTextures()
     //m_data->graphics.loadTexture("mine", "assets/Tile/mine.png");
     //m_data->graphics.loadTexture("roads", "assets/Tile/roads.png");
 
-
+    m_data->m_TileMap["forest"] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize);
+    m_data->m_TileMap["commercial"] = Tile(m_data->graphics.getTexture("commercial"),TileType::COMMERCIAL,tileSize);
 
 
 }
@@ -43,7 +44,7 @@ void GameLoop::run()
     //?convert to sf::Time
     float currentTime = this->m_clock.getElapsedTime().asSeconds();
     float newTime;
-    float sumTime = 0.0f; //accumulator for differences in rendering and physics
+    float sumTime = 0.0f; //accumulator for differences in rendering
     float frameTime;
     float interpolation;
 

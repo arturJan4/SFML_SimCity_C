@@ -3,6 +3,8 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 
+#include <iostream>
+
 enum class TileType : unsigned char
 {
     EMPTY,
@@ -18,11 +20,16 @@ enum class TileType : unsigned char
 class Tile
 {
     public:
-    Tile(sf::Texture& texture, TileType type);
+    Tile()
+    {
+    //std::cerr<<"empty tile instance";
+    };
+    Tile(sf::Texture& texture, TileType type,const unsigned int tileSize);
     ~Tile();
 
     sf::Sprite m_assoSprite;
     TileType m_type;
+    int m_tileSize; //in pixels
 
     void update();
     void draw(sf::RenderWindow& window, float dt);

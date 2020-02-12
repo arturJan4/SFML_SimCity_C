@@ -18,7 +18,7 @@ class MainGameState : public State
 
     private:
         std::shared_ptr<GameData> m_data; //copy pointer?
-        World m_world;
+        World* m_world;
         sf::Clock m_clock;
         sf::View m_view;
         sf::Sprite m_background;
