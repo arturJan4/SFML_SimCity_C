@@ -21,7 +21,9 @@ class MainGameState : public State
         World* m_world;
         sf::Clock m_clock;
         sf::View m_view;
+        sf::View m_guiView;
         sf::Sprite m_background;
+        float m_zoom;
 };
 
 #endif // MAINGAMESTATE_HPP_INCLUDED
