@@ -34,7 +34,7 @@ void GameLoop::loadTextures()
     //m_data->graphics.loadTexture("water", "assets/Tile/water.png");
     //m_data->graphics.loadTexture("empty", "assets/Tile/empty.png");
     //m_data->graphics.loadTexture("mine", "assets/Tile/mine.png");
-    //m_data->graphics.loadTexture("roads", "assets/Tile/roads.png");
+    //m_data->graphics.loadTexture("road", "assets/Tile/roads.png");
 
     //TILEMAP
     m_data->m_TileMap["forest"] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize);

@@ -26,12 +26,17 @@ World::World(const std::string& filepath, unsigned int width, unsigned int heigh
 void World::load(const std::string& filepath, std::map<std::string, Tile> &tileRefResources)
 {
     /*
+
         //TYPE
         0 - EMPTY
         1 - FOREST
         2 - COMMERCIAL
+        3 - RESIDENTIAL
+        4 - INDUSTRIAL
+        5 - ROAD
+        6 - WATER
+        7 - MINE
         itd.
-
 
         Format:
         width height // how many(not pixels)
@@ -64,11 +69,24 @@ void World::load(const std::string& filepath, std::map<std::string, Tile> &tileR
             break;
         case 1:
             m_tileVector.push_back(tileRefResources.at("forest"));
-            //std::cerr << "loading tile 1 - forest";
             break;
         case 2:
             m_tileVector.push_back(tileRefResources.at("commercial"));
-            //std::cerr << "loading tile 1 - forest";
+            break;
+        case 3:
+            m_tileVector.push_back(tileRefResources.at("residential"));
+            break;
+        case 4:
+            m_tileVector.push_back(tileRefResources.at("industrial"));
+            break;
+        case 5:
+            m_tileVector.push_back(tileRefResources.at("road"));
+            break;
+        case 6:
+            m_tileVector.push_back(tileRefResources.at("water"));
+            break;
+        case 7:
+            m_tileVector.push_back(tileRefResources.at("mine"));
             break;
         default:
             std::cerr << "inType error";
@@ -78,6 +96,9 @@ void World::load(const std::string& filepath, std::map<std::string, Tile> &tileR
     //read rest
     //std::cerr << m_width << " "<< m_height;
     inFile.close();
+
+    for(int i = 0; i < m_width * m_height; ++i)
+        m_selected.push_back(0);
 }
 
 void World::save(const std::string& filepath)
@@ -90,6 +111,46 @@ void World::save(const std::string& filepath)
         exit(1);
     }
 
+    outFile << m_width << " ";
+    outFile << m_height << " ";
+
+    for(int i = 0; i < m_width * m_height; ++i)
+    {
+        int type;
+
+        switch(m_tileVector[i].m_type)
+        {
+        case TileType::EMPTY:
+            outFile << 0;
+            break;
+        case TileType::FOREST:
+            outFile << 1;
+            break;
+        case TileType::COMMERCIAL:
+            outFile << 2;
+            break;
+        case TileType::RESIDENTIAL:
+            outFile << 3;
+            break;
+        case TileType::INDUSTRIAL:
+            outFile << 4;
+            break;
+        case TileType::ROAD:
+            outFile << 5;
+            break;
+        case TileType::WATER:
+            outFile << 6;
+            break;
+        case TileType::MINE:
+            outFile << 7;
+            break;
+
+        default:
+            std::cerr << "inType error";
+            break;
+        }
+        outFile << " ";
+    }
     //save rest
     outFile.close();
 }
@@ -114,8 +175,22 @@ void World::select(sf::Vector2f mousePos)
 {
     int x = mousePos.x/m_gridSize;
     int y = mousePos.y/m_gridSize;
-    if(x < 0 || y < 0 || x >= m_width || y >= m_height)return;
+    if(x < 0 || y < 0 || x >= m_width || y >= m_height)
+        return;
     m_tileVector[y*m_width + x].m_assoSprite.setColor(sf::Color(0x53,0x85,0x8c,255));
+    m_selected[y*m_width + x] = 1;
+}
 
-
+void World::replaceTiles(Tile tile)
+{
+    for(int i = 0; i < m_height; ++i)
+    {
+        for(int j = 0; j < m_width; ++j)
+        {
+            if(m_selected[i*m_width + j] == 1)
+            {
+                m_tileVector[i*m_width + j] = tile;
+            }
+        }
+    }
 }

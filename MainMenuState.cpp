@@ -80,7 +80,7 @@ void MainMenuState::draw(float dt)
     m_data->window.setView(m_view);
     m_data->window.clear();
     m_data->window.draw(m_rectBackground);
-    m_playButton.render(m_data->window);
-    m_exitButton.render(m_data->window);
+    m_playButton.draw(m_data->window);
+    m_exitButton.draw(m_data->window);
     m_data->window.display();
 }

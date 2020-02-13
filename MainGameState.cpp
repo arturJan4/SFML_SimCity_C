@@ -4,6 +4,7 @@ MainGameState::MainGameState(std::shared_ptr<GameData> gamedata)
 {
     m_data = gamedata;
     m_world = new World("mapData.txt",64,64,gamedata->m_TileMap);
+    m_replaceTile = "commercial";
     init();
 }
 
@@ -67,6 +68,10 @@ void MainGameState::handleInput()
             {
                 m_data->window.close();
             }
+            else if(event.key.code == sf::Keyboard::T)
+            {
+                m_world->save("mapData.txt");
+            }
             else if(event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
             {
                 m_view.move(-4.0f * m_zoom,0);
@@ -97,7 +102,9 @@ void MainGameState::handleInput()
         }
         if(sf::Event::MouseButtonPressed == event.type)
         {
+            m_currentTile = (m_data->m_TileMap.at(m_replaceTile));
             m_world->select(m_mousePosView);
+            m_world->replaceTiles(m_currentTile);
         }
         if(sf::Event::MouseWheelScrolled == event.type)
         {

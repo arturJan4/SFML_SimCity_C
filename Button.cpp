@@ -69,7 +69,7 @@ void Button::updatePosition(float x, float y, float width, float height)
    // m_sprite.setScale(width,height);
 
 }
-void Button::render(sf::RenderWindow& window)
+void Button::draw(sf::RenderWindow& window)
 {
     window.draw(m_shape);
     window.draw(m_sprite);

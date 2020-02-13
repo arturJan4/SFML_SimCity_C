@@ -26,7 +26,9 @@ class MainGameState : public State
         sf::Sprite m_background;
         sf::Vector2f m_mousePosView;
 
-        Tile* m_currentTile;
+        Tile m_currentTile;
+        std::string m_replaceTile;
+
         float m_zoom;
 };
 

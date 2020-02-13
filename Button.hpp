@@ -25,7 +25,7 @@ class Button
     ~Button();
 
     void update(const sf::Vector2f mousePos);
-    void render(sf::RenderWindow& window);
+    void draw(sf::RenderWindow& window);
     void setTexture(sf::Texture& texture);
     void updatePosition(float x, float y, float width, float height);
 

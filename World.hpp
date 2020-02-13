@@ -34,6 +34,7 @@ class World
     void save(const std::string& filepath);//save to disk
     void draw(sf::RenderWindow& window, float dt);
     void select(sf::Vector2f mousePos);
+    void replaceTiles(Tile tile);
 
 };
 #endif // WORLD_HPP_INCLUDED

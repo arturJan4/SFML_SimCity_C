@@ -9,12 +9,12 @@ enum class TileType : unsigned char
 {
     EMPTY,
     FOREST,
+    COMMERCIAL,
+    RESIDENTIAL,
+    INDUSTRIAL,
+    ROAD,
     WATER,
     MINE,
-    ROAD,
-    RESIDENTIAL,
-    COMMERCIAL,
-    INDUSTRIAL,
 };
 
 class Tile
