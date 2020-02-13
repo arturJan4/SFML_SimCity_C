@@ -13,14 +13,16 @@ void MainGameState::init()
     //size in pixels
     sf::Vector2f position = sf::Vector2f(this->m_data->window.getSize());
 
-    m_zoom = 1.0;//cummulative zoom
-    m_zoom = m_zoom * 1.5f;
-    m_view.zoom(1.5f);
+    m_view.setSize(position);
+    m_guiView.setSize(position);
 
-    m_view.setSize(position.x,position.y);
-    m_guiView.setSize(position.x,position.y);
-    m_guiView.setCenter(position);
+    m_guiView.setCenter((position.x*0.5f),(position.y*0.5f));
     m_view.setCenter((position.x*0.5f),(position.y*0.5f));
+
+    m_zoom = 0.2f;//cummulative zoom
+    //m_zoom = m_zoom * 5.0f;
+    m_view.zoom(m_zoom);
+    m_view.setCenter((m_world->m_width*0.5f*m_world->m_gridSize),(m_world->m_height*0.5f*m_world->m_gridSize));
 
     m_background.setTexture(this->m_data->graphics.getTexture("background"));
     m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
@@ -76,6 +78,34 @@ void MainGameState::handleInput()
             {
                 m_world->save("mapData.txt");
             }
+            else if(event.key.code == sf::Keyboard::F11)
+            {
+                m_data->isFullScreen = !(m_data->isFullScreen);
+                if(m_data->isFullScreen)
+                {
+                    m_data->window.create(sf::VideoMode(800,600),
+                                          m_data->title, sf::Style::Fullscreen);
+                }
+                else
+                {
+                    m_data->window.create(sf::VideoMode(800,600),
+                                          m_data->title, sf::Style::Default);
+                }
+
+                m_data->window.setFramerateLimit(60);
+
+                sf::Vector2f position = sf::Vector2f(this->m_data->window.getSize());
+                m_view.setSize(position.x,position.y);
+                m_view.zoom(m_zoom);
+                m_guiView.setSize(position.x, position.y);
+                m_guiView.setCenter(position);
+                m_view.setCenter((position.x*0.5f),(position.y*0.5f));
+                //
+                m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
+                m_background.setScale(
+                    float(position.x) / float((m_background.getTexture()->getSize().x)),
+                    float(position.y)/ float((m_background.getTexture()->getSize().y)));
+            }
             else if(event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
             {
                 m_view.move(-4.0f * m_zoom,0);
@@ -130,9 +160,23 @@ void MainGameState::handleInput()
         }
         if(sf::Event::MouseButtonPressed == event.type)
         {
-            m_currentTile = (m_data->m_TileMap.at(m_replaceTile));
-            m_world->select(m_mousePosView);
-            m_world->replaceTiles(m_currentTile);
+            if(!isSelecting)
+            {
+                m_currentTile = (m_data->m_TileMap.at(m_replaceTile));
+                m_mousePosBeg = m_mousePosView;
+                isSelecting = true;
+            }
+            //m_world->replaceTiles(m_currentTile);
+        }
+        if(sf::Event::MouseButtonReleased == event.type)
+        {
+            if(isSelecting)
+            {
+                isSelecting = false;
+                m_world->replaceTiles(m_currentTile);
+                m_world->clearSelected();
+            }
+            //m_mousePos = m_mousePosView;
         }
         if(sf::Event::MouseWheelScrolled == event.type)
         {
@@ -151,7 +195,6 @@ void MainGameState::handleInput()
         if(sf::Event::Resized == event.type)
         {
             m_view.setSize(event.size.width,event.size.height);
-            m_view.zoom(m_zoom);
             m_guiView.setSize(event.size.width, event.size.height);
             //
             m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
@@ -166,6 +209,15 @@ void MainGameState::update(float dt)
 {
     m_mousePosView = m_data->window.mapPixelToCoords(sf::Mouse::getPosition(m_data->window));
 
+    if(static_cast<int>(dt) % 60 < 1)
+    {
+        if(isSelecting)
+        {
+            m_world->clearSelected();
+            m_world->selectArea(sf::Vector2f(m_mousePosBeg.x/16.0f,m_mousePosBeg.y/16.0f),
+                                sf::Vector2f(m_mousePosView.x/16.0f,m_mousePosView.y/16.0f));
+        }
+    }
     //std::cerr << "\033[2J\033[1;1H";
     //std::cerr << m_mousePosView.x << ", " << m_mousePosView.y;
     moveCamera();

@@ -39,12 +39,37 @@ void MainMenuState::handleInput()
             {
                 m_data->window.close();
             }
-            if(event.key.code == sf::Keyboard::Space)//new state
+            else if(event.key.code == sf::Keyboard::Space)//new state
             {
                 m_data->machine.pushState(new MainGameState(this->m_data));
             }
+            else if(event.key.code == sf::Keyboard::F11)
+            {
+                m_data->isFullScreen = !(m_data->isFullScreen);
+                if(m_data->isFullScreen)
+                {
+                    m_data->window.create(sf::VideoMode(800,600),
+                                          m_data->title, sf::Style::Fullscreen);
+                }
+                else
+                {
+                    m_data->window.create(sf::VideoMode(800,600),
+                                          m_data->title, sf::Style::Default);
+                }
+                m_data->window.setFramerateLimit(60);
+                sf::Vector2f position;
+                position.x = this->m_data->window.getSize().x;
+                position.y = this->m_data->window.getSize().y;
+                             m_view.setSize(position.x,position.y);
+                m_rectBackground.setScale(position.x,position.y);
+                m_rectBackground.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_view));
+
+                m_playButton.updatePosition(m_view.getCenter().x,m_view.getCenter().y*0.4f,position.x/m_position.x,position.y/m_position.y);
+                m_exitButton.updatePosition(m_view.getCenter().x,m_view.getCenter().y*1.3f,position.x/m_position.x,position.y/m_position.y);
+                m_position = position;
+            }
         }
-        else if(sf::Event::Resized == event.type)
+        if(sf::Event::Resized == event.type)
         {
             sf::Vector2f position;
             position.x = event.size.width;

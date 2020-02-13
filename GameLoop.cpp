@@ -4,8 +4,17 @@
 
 GameLoop::GameLoop(int width, int height, std::string title)
 {
-    m_data->window.create(sf::VideoMode(width,height),
+    m_data->title = title;
+    if(m_data->isFullScreen)
+    {
+        m_data->window.create(sf::VideoMode(width,height),
+                          title, sf::Style::Fullscreen);
+    }
+    else
+    {
+        m_data->window.create(sf::VideoMode(width,height),
                           title, sf::Style::Default);
+    }
     m_data->window.setFramerateLimit(60);
     this->loadTextures();
     m_data->machine.pushState(new MainMenuState(this->m_data));
@@ -45,7 +54,7 @@ void GameLoop::loadTextures()
     m_data->m_TileMap["industrial"] = Tile(m_data->graphics.getTexture("industrial"),TileType::INDUSTRIAL,tileSize,0,6.0f,0);
     m_data->m_TileMap["residential"] = Tile(m_data->graphics.getTexture("residential"),TileType::RESIDENTIAL,tileSize,0,6.0f,0);
     m_data->m_TileMap["commercial"] = Tile(m_data->graphics.getTexture("commercial"),TileType::COMMERCIAL,tileSize,0,6.0f,0);
-    m_data->m_TileMap["water"] = Tile(m_data->graphics.getTexture("water"),TileType::WATER,tileSize,3,6.0f,0);
+    m_data->m_TileMap["water"] = Tile(m_data->graphics.getTexture("water"),TileType::WATER,tileSize,3,3.0f,0);
 }
 
 void GameLoop::run()

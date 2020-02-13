@@ -16,6 +16,8 @@ struct GameData
     MediaHandler graphics;
     StateMachine machine;
     sf::RenderWindow window;
+    bool isFullScreen = false;
+    std::string title;
     std::map<std::string, Tile> m_TileMap;
 };
 

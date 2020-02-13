@@ -179,6 +179,42 @@ void World::select(sf::Vector2f mousePos)
     m_selected[y*m_width + x] = 1;
 }
 
+void World::selectArea(sf::Vector2f mousePosBeg, sf::Vector2f mousePosEnd)
+{
+    //bounds
+    if(mousePosBeg.x < 0)mousePosBeg.x = 0;
+    else if(mousePosBeg.x >= m_width)mousePosBeg.x = m_width - 1;
+    if(mousePosEnd.x < 0)mousePosEnd.x = 0;
+    else if(mousePosEnd.x >= m_width)mousePosEnd.x = m_width - 1;
+    if(mousePosBeg.y < 0)mousePosBeg.y = 0;
+    else if(mousePosBeg.y >= m_height)mousePosBeg.y = m_height - 1;
+    if(mousePosEnd.y < 0)mousePosEnd.y = 0;
+    else if(mousePosEnd.y >= m_height)mousePosEnd.y = m_height - 1;
+
+    //swap
+    if(mousePosBeg.x > mousePosEnd.x)
+    {
+        float temp = mousePosBeg.x;
+        mousePosBeg.x = mousePosEnd.x;
+        mousePosEnd.x = temp;
+    }
+    if(mousePosBeg.y > mousePosEnd.y)
+    {
+        float temp = mousePosBeg.y;
+        mousePosBeg.y = mousePosEnd.y;
+        mousePosEnd.y = temp;
+    }
+
+    for(int i = mousePosBeg.y; i <= mousePosEnd.y; ++i)
+    {
+        for(int j = mousePosBeg.x; j <= mousePosEnd.x; ++j)
+        {
+            m_selected[i*m_width + j] = 1;
+            m_tileVector[i*m_width + j].m_assoSprite.setColor(sf::Color(0x53,0x85,0x8c,255));
+        }
+    }
+}
+
 void World::replaceTiles(Tile tile)
 {
     for(int i = 0; i < m_height; ++i)
@@ -200,6 +236,7 @@ void World::clearSelected()
         for(int j = 0; j < m_width; ++j)
         {
             m_selected[i*m_width + j] = 0;
+            m_tileVector[i*m_width +j].m_assoSprite.setColor(sf::Color(0xff,0xff,0xff));
         }
     }
 }

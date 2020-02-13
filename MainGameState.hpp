@@ -24,7 +24,11 @@ class MainGameState : public State
         sf::View m_view;
         sf::View m_guiView;
         sf::Sprite m_background;
+
         sf::Vector2f m_mousePosView;
+        sf::Vector2f m_mousePosBeg;
+        sf::Vector2f m_mousePosEnd;
+        bool isSelecting = false;
 
         Tile m_currentTile;
         std::string m_replaceTile;

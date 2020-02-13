@@ -36,6 +36,7 @@ class World
     void select(sf::Vector2f mousePos);
     void replaceTiles(Tile tile);
     void clearSelected();
+    void selectArea(sf::Vector2f mousePosBeg, sf::Vector2f mousePosEnd);
 
 };
 #endif // WORLD_HPP_INCLUDED
