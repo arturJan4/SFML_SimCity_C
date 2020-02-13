@@ -63,7 +63,7 @@ void World::load(const std::string& filepath, std::map<std::string, Tile> &tileR
         switch(type)
         {
         case 0:
-            m_tileVector.push_back(tileRefResources.at("empty"));
+            m_tileVector.push_back(tileRefResources.at("grass"));
             //tile->m_type = TileType::EMPTY;
             //tile->m_assoSprite;
             break;
@@ -189,6 +189,17 @@ void World::replaceTiles(Tile tile)
             {
                 m_tileVector[i*m_width + j] = tile;
             }
+        }
+    }
+}
+
+void World::clearSelected()
+{
+    for(int i = 0; i < m_height; ++i)
+    {
+        for(int j = 0; j < m_width; ++j)
+        {
+            m_selected[i*m_width + j] = 0;
         }
     }
 }

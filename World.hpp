@@ -35,6 +35,7 @@ class World
     void draw(sf::RenderWindow& window, float dt);
     void select(sf::Vector2f mousePos);
     void replaceTiles(Tile tile);
+    void clearSelected();
 
 };
 #endif // WORLD_HPP_INCLUDED

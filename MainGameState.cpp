@@ -4,7 +4,7 @@ MainGameState::MainGameState(std::shared_ptr<GameData> gamedata)
 {
     m_data = gamedata;
     m_world = new World("mapData.txt",64,64,gamedata->m_TileMap);
-    m_replaceTile = "commercial";
+    m_replaceTile = "grass";
     init();
 }
 
@@ -102,6 +102,31 @@ void MainGameState::handleInput()
                 m_zoom = m_zoom * 1.1f;
                 m_view.zoom(1.1f);
             }
+            else if(event.key.code == sf::Keyboard::Num0)
+            {
+                m_replaceTile = "grass";
+            }
+            else if(event.key.code == sf::Keyboard::Num1)
+            {
+                m_replaceTile = "forest";
+            }
+            else if(event.key.code == sf::Keyboard::Num2)
+            {
+                m_replaceTile = "commercial";
+            }
+            else if(event.key.code == sf::Keyboard::Num3)
+            {
+                m_replaceTile = "residential";
+            }
+            else if(event.key.code == sf::Keyboard::Num4)
+            {
+                m_replaceTile = "industrial";
+            }
+            else if(event.key.code == sf::Keyboard::Num6)
+            {
+                m_replaceTile = "water";
+            }
+
         }
         if(sf::Event::MouseButtonPressed == event.type)
         {
