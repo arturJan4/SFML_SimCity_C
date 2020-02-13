@@ -15,6 +15,7 @@ class MainGameState : public State
     void handleInput();
     void update(float dt);
     void draw(float dt);
+    void moveCamera();
 
     private:
         std::shared_ptr<GameData> m_data; //copy pointer?
@@ -23,6 +24,9 @@ class MainGameState : public State
         sf::View m_view;
         sf::View m_guiView;
         sf::Sprite m_background;
+        sf::Vector2f m_mousePosView;
+
+        Tile* m_currentTile;
         float m_zoom;
 };
 

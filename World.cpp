@@ -109,3 +109,13 @@ void World::draw(sf::RenderWindow& window, float dt)
         }
     }
 }
+
+void World::select(sf::Vector2f mousePos)
+{
+    int x = mousePos.x/m_gridSize;
+    int y = mousePos.y/m_gridSize;
+    if(x < 0 || y < 0 || x >= m_width || y >= m_height)return;
+    m_tileVector[y*m_width + x].m_assoSprite.setColor(sf::Color(0x53,0x85,0x8c,255));
+
+
+}

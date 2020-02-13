@@ -20,10 +20,38 @@ void MainGameState::init()
     m_background.setTexture(this->m_data->graphics.getTexture("background"));
     m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
     m_background.setScale(
-               float(position.x) / float((m_background.getTexture()->getSize().x)),
-               float(position.y) / float((m_background.getTexture()->getSize().y)));
+        float(position.x) / float((m_background.getTexture()->getSize().x)),
+        float(position.y) / float((m_background.getTexture()->getSize().y)));
 }
 
+void MainGameState::moveCamera()
+{
+
+    sf::Vector2i mousePos = sf::Mouse::getPosition(m_data->window);
+    sf::Vector2f position = sf::Vector2f(this->m_data->window.getSize());
+
+    if(mousePos.x > 0.96f * position.x && mousePos.x < position.x)//right
+    {
+        float mouseDiff = (mousePos.x - (0.96f * position.x));
+        m_view.move(2.0f * m_zoom * mouseDiff/8,0);
+    }
+    else if(mousePos.x < 0.04f * position.x && mousePos.x >= 0.0f)//left
+    {
+        float mouseDiff = (0.04f * position.x) - mousePos.x;
+        m_view.move(-2.0f * m_zoom * mouseDiff/8,0);
+    }
+    if(mousePos.y > 0.96f * position.y && mousePos.y < position.y)//up
+    {
+        float mouseDiff = (mousePos.y - (0.96f * position.y));
+        m_view.move(0,2.0f * m_zoom * mouseDiff/8);
+    }
+    else if(mousePos.y < 0.04f * position.y && mousePos.y > 0)//down
+    {
+        float mouseDiff =   (0.04f * position.y) - mousePos.y;
+        m_view.move(0,-2.0f * m_zoom * mouseDiff/8);
+    }
+
+}
 void MainGameState::handleInput()
 {
     sf::Event event;
@@ -39,26 +67,37 @@ void MainGameState::handleInput()
             {
                 m_data->window.close();
             }
-            else if(event.key.code == sf::Keyboard::Left)
+            else if(event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
             {
                 m_view.move(-4.0f * m_zoom,0);
             }
-            else if(event.key.code == sf::Keyboard::Right)
+            else if(event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
             {
                 m_view.move(4.0f * m_zoom,0);
             }
-            else if(event.key.code == sf::Keyboard::Up)
+            else if(event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
             {
                 m_view.move(0,-4.0f * m_zoom);
             }
-            else if(event.key.code == sf::Keyboard::Down)
+            else if(event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
             {
                 m_view.move(0,4.0f * m_zoom);
             }
+            else if(event.key.code == sf::Keyboard::Add)
+            {
+                m_zoom = m_zoom * 0.9f;
+                m_view.zoom(0.9f);
+            }
+            else if(event.key.code == sf::Keyboard::Subtract)
+            {
+                m_zoom = m_zoom * 1.1f;
+                m_view.zoom(1.1f);
+            }
+
         }
-        if(sf::Event::MouseMoved)
+        if(sf::Event::MouseButtonPressed == event.type)
         {
-            //przeniesione do update
+            m_world->select(m_mousePosView);
         }
         if(sf::Event::MouseWheelScrolled == event.type)
         {
@@ -90,25 +129,12 @@ void MainGameState::handleInput()
 
 void MainGameState::update(float dt)
 {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(m_data->window);
-        sf::Vector2f position = sf::Vector2f(this->m_data->window.getSize());
-        if(mousePos.x > 0.97f * position.x)//right
-        {
-                m_view.move(2.0f * m_zoom,0);
-        }
-        else if(mousePos.x < 0.03f * position.x)//left
-        {
-                m_view.move(-2.0f * m_zoom,0);
-        }
-        if(mousePos.y > 0.97f * position.y)//up
-        {
-                m_view.move(0,2.0f * m_zoom);
-        }
-        else if(mousePos.y < 0.03f * position.y)//down
-        {
-                m_view.move(0,-2.0f * m_zoom);
-        }
-   // m_view.zoom(m_zoom); klatkuje
+    m_mousePosView = m_data->window.mapPixelToCoords(sf::Mouse::getPosition(m_data->window));
+
+    //std::cerr << "\033[2J\033[1;1H";
+    //std::cerr << m_mousePosView.x << ", " << m_mousePosView.y;
+    moveCamera();
+    // m_view.zoom(m_zoom); klatkuje
 }
 
 void MainGameState::draw(float dt)

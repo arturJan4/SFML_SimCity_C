@@ -16,8 +16,10 @@ void GameLoop::loadTextures()
     m_data->graphics.loadTexture("background", "assets/background.png");
 
     //MENU
+    m_data->graphics.loadFont("Gellosia","assets/UI/Gellosia.ttf");
+
     m_data->graphics.loadTexture("UIEmptyButtoon", "assets/UI/EmptyButton.png");
-    m_data->graphics.loadTexture("UIExitButtion", "assets/UI/ExitButton.png");
+    m_data->graphics.loadTexture("UIExitButton", "assets/UI/ExitButton.png");
     m_data->graphics.loadTexture("UILargeEmptyButton", "assets/UI/LargeEmptyButton.png");
     m_data->graphics.loadTexture("UIMenuButton", "assets/UI/MenuButton.png");
     m_data->graphics.loadTexture("UIPlayButton", "assets/UI/PlayButton.png");
@@ -34,11 +36,11 @@ void GameLoop::loadTextures()
     //m_data->graphics.loadTexture("mine", "assets/Tile/mine.png");
     //m_data->graphics.loadTexture("roads", "assets/Tile/roads.png");
 
+    //TILEMAP
     m_data->m_TileMap["forest"] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize);
     m_data->m_TileMap["commercial"] = Tile(m_data->graphics.getTexture("commercial"),TileType::COMMERCIAL,tileSize);
-
-
 }
+
 void GameLoop::run()
 {
     //?convert to sf::Time

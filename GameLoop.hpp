@@ -35,7 +35,6 @@ class GameLoop
 
         void run();
         void loadTextures();
-        void loadTiles();
 };
 
 #endif // GAMELOOP_HPP_INCLUDED

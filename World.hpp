@@ -17,10 +17,11 @@ class World
 
     int m_width;
     int m_height;
-    int m_gridSize;
+    int m_gridSize = 16;
     float m_scale = 1.0;
 
     std::vector<Tile> m_tileVector;
+    std::vector<int> m_selected;
     //std::map<std::string, Tile> m_tileRefResources;
     //Tile tile;
     sf::Texture temp;
@@ -32,6 +33,7 @@ class World
     void load(const std::string& filepath,std::map<std::string, Tile> &m_tileRefResources);//load from disk
     void save(const std::string& filepath);//save to disk
     void draw(sf::RenderWindow& window, float dt);
+    void select(sf::Vector2f mousePos);
 
 };
 #endif // WORLD_HPP_INCLUDED
