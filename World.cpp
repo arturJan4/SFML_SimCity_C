@@ -116,8 +116,6 @@ void World::save(const std::string& filepath)
 
     for(int i = 0; i < m_width * m_height; ++i)
     {
-        int type;
-
         switch(m_tileVector[i].m_type)
         {
         case TileType::EMPTY:

@@ -12,11 +12,15 @@ void MainGameState::init()
 {
     //size in pixels
     sf::Vector2f position = sf::Vector2f(this->m_data->window.getSize());
+
+    m_zoom = 1.0;//cummulative zoom
+    m_zoom = m_zoom * 1.5f;
+    m_view.zoom(1.5f);
+
     m_view.setSize(position.x,position.y);
     m_guiView.setSize(position.x,position.y);
     m_guiView.setCenter(position);
     m_view.setCenter((position.x*0.5f),(position.y*0.5f));
-    m_zoom = 1.0;//cummulative zoom
 
     m_background.setTexture(this->m_data->graphics.getTexture("background"));
     m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
@@ -98,7 +102,6 @@ void MainGameState::handleInput()
                 m_zoom = m_zoom * 1.1f;
                 m_view.zoom(1.1f);
             }
-
         }
         if(sf::Event::MouseButtonPressed == event.type)
         {

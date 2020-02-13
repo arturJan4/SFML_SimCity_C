@@ -5,18 +5,22 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
-#include <Button.hpp>
+#include "Button.hpp"
 
 class DropDownList
 {
     public:
-    void update();
-    void draw();
+    DropDownList();
+    ~DropDownList();
+
+    void update(sf::Vector2f mousePos);
+    void draw(sf::RenderWindow renderWindow);
+
 
     private:
     sf::RectangleShape m_currentElement;
     std::vector<Button*> m_list;
 
-}
+};
 
 #endif // GUI_HPP_INCLUDED
