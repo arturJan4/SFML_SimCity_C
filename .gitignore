@@ -37,3 +37,5 @@
 bin/
 *.layout
 TODO.md
+assets/
+mapData.txt
