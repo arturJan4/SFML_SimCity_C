@@ -6,6 +6,7 @@ AnimationComponent::AnimationComponent(int maxID,float animSpeed, int width, int
     m_width = width;
     m_height = height;
     m_currentBound = m_startBound;
+    m_timer = animSpeed;
     m_maxID = maxID;
     m_currentID = 0;
     m_duration = 0.0f;

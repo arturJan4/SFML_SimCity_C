@@ -51,7 +51,7 @@ void GameLoop::loadTextures()
     //m_data->m_TileMap[""] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize,0,6.0f,0);
     m_data->m_TileMap["road"] = Tile(m_data->graphics.getTexture("road"),TileType::ROAD,tileSize,0,6.0f,0);
     m_data->m_TileMap["forest"] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize,0,6.0f,0);
-    m_data->m_TileMap["industrial"] = Tile(m_data->graphics.getTexture("industrial"),TileType::INDUSTRIAL,tileSize,0,6.0f,0);
+    m_data->m_TileMap["industrial"] = Tile(m_data->graphics.getTexture("industrial"),TileType::INDUSTRIAL,tileSize,3,1.0f,0);
     m_data->m_TileMap["residential"] = Tile(m_data->graphics.getTexture("residential"),TileType::RESIDENTIAL,tileSize,0,6.0f,0);
     m_data->m_TileMap["commercial"] = Tile(m_data->graphics.getTexture("commercial"),TileType::COMMERCIAL,tileSize,0,6.0f,0);
     m_data->m_TileMap["water"] = Tile(m_data->graphics.getTexture("water"),TileType::WATER,tileSize,3,3.0f,0);
