@@ -27,12 +27,8 @@
 
 class AnimationComponent
 {
-    public:
     //std::vector<Animation> m_animations;
-    float m_duration; //since new frame
-    int m_width;
-    int m_height;
-    float m_timer = 3.0f;//since beginning animation
+    public :
     sf::IntRect m_currentBound;
     sf::IntRect m_startBound;
 
@@ -47,6 +43,10 @@ class AnimationComponent
     //void reset();
 
     private:
+    float m_duration; //since new frame
+    int m_width;
+    int m_height;
+    float m_timer = 6.0f;//since beginning animation
 
 };
 
