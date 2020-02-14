@@ -1,4 +1,5 @@
 #include "MainGameState.hpp"
+#include "MainMenuState.hpp"
 
 MainGameState::MainGameState(std::shared_ptr<GameData> gamedata)
 {
@@ -23,6 +24,11 @@ void MainGameState::init()
     //m_zoom = m_zoom * 5.0f;
     m_view.zoom(m_zoom);
     m_view.setCenter((m_world->m_width*0.5f*m_world->m_gridSize),(m_world->m_height*0.5f*m_world->m_gridSize));
+
+//    m_miniMapView.setSize(m_view.getSize());
+//    m_miniMapView.setCenter(m_view.getCenter());
+//    m_miniMapView.zoom(m_zoom*2);
+//    m_miniMapView.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
 
     m_background.setTexture(this->m_data->graphics.getTexture("background"));
     m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
@@ -74,7 +80,7 @@ void MainGameState::handleInput()
             {
                 m_data->window.close();
             }
-            else if(event.key.code == sf::Keyboard::T)
+            else if(event.key.code == sf::Keyboard::T || event.key.code == sf::Keyboard::F5)
             {
                 m_world->save("mapData.txt");
             }
@@ -151,6 +157,10 @@ void MainGameState::handleInput()
             else if(event.key.code == sf::Keyboard::Num4)
             {
                 m_replaceTile = "industrial";
+            }
+            else if(event.key.code == sf::Keyboard::Num5)
+            {
+                m_replaceTile = "road";
             }
             else if(event.key.code == sf::Keyboard::Num6)
             {

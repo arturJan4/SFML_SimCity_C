@@ -23,11 +23,11 @@ class MainGameState : public State
         sf::Clock m_clock;
         sf::View m_view;
         sf::View m_guiView;
+        //sf::View m_miniMapView;TODO
         sf::Sprite m_background;
 
         sf::Vector2f m_mousePosView;
         sf::Vector2f m_mousePosBeg;
-        sf::Vector2f m_mousePosEnd;
         bool isSelecting = false;
 
         Tile m_currentTile;

@@ -99,6 +99,7 @@ void World::load(const std::string& filepath, std::map<std::string, Tile> &tileR
 
     for(int i = 0; i < m_width * m_height; ++i)
         m_selected.push_back(0);
+    rotateRoads();
 }
 
 void World::save(const std::string& filepath)
@@ -151,8 +152,69 @@ void World::save(const std::string& filepath)
     }
     //save rest
     outFile.close();
+    rotateRoads();
 }
+void World::rotateRoads()
+{
+    for(int i = 0; i < m_height; ++i)
+    {
+        for(int j = 0; j < m_width; ++j)
+        {
+            bool adjTiles[4] = {0,0,0,0};//UP DOWN LEFT RIGHT
+            if(i > 0)
+            {
+                 if(m_tileVector[(i-1)*m_width + j].m_type == TileType::ROAD)
+                    adjTiles[0] = 1;
+            }
+            if(i < m_height - 1)
+            {
+                if(m_tileVector[(i+1)*m_width + j].m_type == TileType::ROAD)
+                    adjTiles[1] = 1;
+            }
+            if(j > 0)
+            {
+                if(m_tileVector[i*m_width + j-1].m_type == TileType::ROAD)
+                    adjTiles[2] = 1;
+            }
+            if(j < m_width - 1)
+            {
+                if(m_tileVector[i*m_width + j+1].m_type == TileType::ROAD)
+                    adjTiles[3] = 1;
+            }
 
+            int variant = 0;
+            if(adjTiles[0] && adjTiles[1] && adjTiles[2] && adjTiles[3])//all
+                variant = 7;
+            else if(adjTiles[0] && adjTiles[1] && adjTiles[2])//UP DOWN LEFT
+                variant = 3;
+            else if(adjTiles[0] && adjTiles[1] && adjTiles[3])//UP DOWN RIGHT
+                variant = 6;
+            else if(adjTiles[1] && adjTiles[2] && adjTiles[3])//DOWN LEFT RIGHT
+                variant = 4;
+            else if(adjTiles[0] && adjTiles[2] && adjTiles[3])//UP LEFT RIGHT
+                variant = 5;
+            else if(adjTiles[0] && adjTiles[2])//UP LEFT
+                variant = 11;
+            else if(adjTiles[0] && adjTiles[3])//UP RIGHT
+                variant = 10;
+            else if(adjTiles[1] && adjTiles[2])//DOWN LEFT
+                variant = 8;
+            else if(adjTiles[1] && adjTiles[3])//DOWN RIGHT
+                variant = 9;
+            else if(adjTiles[2] || adjTiles[3])//LEFT RIGHT
+                variant = 1;
+            else if(adjTiles[0] || adjTiles[1])//UP DOWN
+                variant = 2;
+
+
+            if(m_tileVector[i*m_width + j].m_type != TileType::ROAD)continue;
+
+            m_tileVector[i*m_width + j].m_animationComponent.m_startBound.top = 16 * variant;
+
+
+        }
+    }
+}
 void World::draw(sf::RenderWindow& window, float dt)
 {
     for(int i = 0; i < m_height; ++i)
@@ -227,6 +289,7 @@ void World::replaceTiles(Tile tile)
             }
         }
     }
+    rotateRoads();
 }
 
 void World::clearSelected()

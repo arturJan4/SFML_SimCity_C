@@ -17,7 +17,7 @@ GameLoop::GameLoop(int width, int height, std::string title)
     }
     m_data->window.setFramerateLimit(60);
     this->loadTextures();
-    m_data->machine.pushState(new MainMenuState(this->m_data));
+    m_data->machine.pushState(new MainMenuState(this->m_data),false);
     this->run();
 }
 
@@ -44,12 +44,12 @@ void GameLoop::loadTextures()
     m_data->graphics.loadTexture("water", "assets/Tile/waterAnim.png");
     //m_data->graphics.loadTexture("empty", "assets/Tile/empty.png");
     //m_data->graphics.loadTexture("mine", "assets/Tile/mine.png");
-    //m_data->graphics.loadTexture("road", "assets/Tile/roads.png");
+    m_data->graphics.loadTexture("road", "assets/Tile/roads.png");
 
     //TILEMAP
     m_data->m_TileMap["grass"] = Tile(m_data->graphics.getTexture("grass"),TileType::EMPTY,tileSize,0,6.0f,0);
     //m_data->m_TileMap[""] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize,0,6.0f,0);
-    //m_data->m_TileMap["forest"] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize,0,6.0f,0);
+    m_data->m_TileMap["road"] = Tile(m_data->graphics.getTexture("road"),TileType::ROAD,tileSize,0,6.0f,0);
     m_data->m_TileMap["forest"] = Tile(m_data->graphics.getTexture("forest"),TileType::FOREST,tileSize,0,6.0f,0);
     m_data->m_TileMap["industrial"] = Tile(m_data->graphics.getTexture("industrial"),TileType::INDUSTRIAL,tileSize,0,6.0f,0);
     m_data->m_TileMap["residential"] = Tile(m_data->graphics.getTexture("residential"),TileType::RESIDENTIAL,tileSize,0,6.0f,0);
