@@ -24,7 +24,7 @@ struct GameData
 class GameLoop
 {
     public:
-    GameLoop(int width, int height, std::string title);
+    GameLoop(int width, int height, const char *title);
     ~GameLoop();
 
     const static int tileSize = 16; //size of tile-textures in pixels

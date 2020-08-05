@@ -1,19 +1,13 @@
 # SFML_SimCity_C
-Projekt z C
+C++ project written in SFML, using CMake, and Piskel (for drawing pixelarts)
 
-#instalacja
--wymagany SFML 2.5.1
--make
+# Installation
+required:
+- sfml 2.5.1
+- cmake (3.13 or higher)
 
-W folderze SFML_SimCity_C/  
--make all  
-	-tworzy pliki wykonywalne w wersji Release i Debug w folderze Build/  
--make debug  
-	-tworzy pliki wykonywalne w wersji Debug w folderze Build/  
--make release  
-	-tworzy pliki wykonywalne w wersji Release w folderze Build/  
--make clean  
-	-usuwa pliki dodatkowe stworzone podczas kompilacji  
+Windows: Use CMake software
+Linux: when in game folder, use commands "mkdir build" "cd build" "cmake .." "make", (you can also run "mkdir build ; cd build ; cmake .. ; make") now you can play by launching SFML_SimCity_C executable ("./SFML_SIMCITY_C")
 
-#Autor
+#Author
 Artur Jankowski
