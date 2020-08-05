@@ -49,8 +49,7 @@ bool Button::isHovering()
 
 bool Button::isPressed()
 {
-    if(m_mouseState == MouseState::PRESSED)return true;
-    return false;
+    return m_mouseState == MouseState::PRESSED;
 }
 
 void Button::updatePosition(float x, float y, float width, float height)

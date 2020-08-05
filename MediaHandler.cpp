@@ -1,6 +1,6 @@
 #include "MediaHandler.hpp"
 
-void MediaHandler::loadTexture(const std::string texName,const std::string filepath)
+void MediaHandler::loadTexture(const char *texName, const std::string filepath)
 {
     sf::Texture temp;
     if(temp.loadFromFile(filepath))

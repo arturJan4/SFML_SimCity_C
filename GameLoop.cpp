@@ -2,17 +2,17 @@
 #include "MainMenuState.hpp"
 #include <iostream>
 
-GameLoop::GameLoop(int width, int height, std::string title)
+GameLoop::GameLoop(int width, int height, const char *title)
 {
     m_data->title = title;
     if(m_data->isFullScreen)
     {
-        m_data->window.create(sf::VideoMode(width,height),
+        m_data->window.create(sf::VideoMode(static_cast<unsigned int>(width), static_cast<unsigned int>(height)),
                           title, sf::Style::Fullscreen);
     }
     else
     {
-        m_data->window.create(sf::VideoMode(width,height),
+        m_data->window.create(sf::VideoMode(static_cast<unsigned int>(width), static_cast<unsigned int>(height)),
                           title, sf::Style::Default);
     }
     m_data->window.setFramerateLimit(60);

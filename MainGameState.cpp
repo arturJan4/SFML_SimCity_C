@@ -33,8 +33,8 @@ void MainGameState::init()
     m_background.setTexture(this->m_data->graphics.getTexture("background"));
     m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
     m_background.setScale(
-        float(position.x) / float((m_background.getTexture()->getSize().x)),
-        float(position.y) / float((m_background.getTexture()->getSize().y)));
+            position.x / float((m_background.getTexture()->getSize().x)),
+            position.y / float((m_background.getTexture()->getSize().y)));
 }
 
 void MainGameState::moveCamera()
@@ -109,8 +109,8 @@ void MainGameState::handleInput()
                 //
                 m_background.setPosition(m_data->window.mapPixelToCoords(sf::Vector2i(0,0),m_guiView));
                 m_background.setScale(
-                    float(position.x) / float((m_background.getTexture()->getSize().x)),
-                    float(position.y)/ float((m_background.getTexture()->getSize().y)));
+                        position.x / float((m_background.getTexture()->getSize().x)),
+                        position.y / float((m_background.getTexture()->getSize().y)));
             }
             else if(event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
             {
