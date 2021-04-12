@@ -4,6 +4,8 @@
 ## Technologies
 C++ project written using SFML, using CMake, and Piskel (for drawing pixelarts)
 
+## In Action
+![gameplay-gif](https://github.com/arturJan4/SFML_SimCity_C/tree/master/docs/showcase.gif)
 ## Installation
 required:
 - sfml 2.5.1
